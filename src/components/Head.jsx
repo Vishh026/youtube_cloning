@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Menu, Search, Mic, User } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "./utils/reducers/AppSlice";
 import { YOUTUBE_SUGGESTION_API } from "../Constant";
+import { cacheResults } from "./utils/reducers/SearchSlice";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -10,23 +11,36 @@ const Head = () => {
   const [showSuggetion,setShowSuggetion] = useState(true)
   const dispatch = useDispatch();
 
+  // get the catche redults from store
+  const  searchCache= useSelector((store)=> store.searchReducer) 
+  console.log("catche",searchCache);
+  
+
   const toggleMenubar = () => {
     dispatch(toggleMenu());
   };
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      getSuggestionsbySearch();
+      if(searchCache[searchQuery]){
+        setShowSuggetion(searchCache[searchQuery])
+      }else{
+          getSuggestionsbySearch();
+      }
     }, 300);
 
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
   const getSuggestionsbySearch = async () => {
+    console.log("searchquery",searchQuery);
+    
     if (!searchQuery) return;
 
     const data = await fetch(YOUTUBE_SUGGESTION_API + searchQuery);
     const json = await data.json();
+
+    dispatch(cacheResults({[searchQuery]: json[1]}))
     setSuggestions(json[1]);
   };
 
