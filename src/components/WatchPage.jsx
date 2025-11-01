@@ -2,19 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { closeMenu } from "./utils/reducers/AppSlice";
 import { useSearchParams } from "react-router-dom";
-import {  YOUTUBE_SINGLE_VIDEO } from "../Constant";
+import { YOUTUBE_SINGLE_VIDEO } from "../Constant";
+import CommentContainer from "./CommentContainer";
 
 const WatchPage = () => {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get("v");
-
   const [singleVideo, setSingleVideo] = useState(null);
 
   const getSingleVideoData = async () => {
-    const data = await fetch(
-      YOUTUBE_SINGLE_VIDEO(videoId)
-    );
+    const data = await fetch(YOUTUBE_SINGLE_VIDEO(videoId));
     const json = await data.json();
     setSingleVideo(json.items[0]);
   };
@@ -40,51 +38,59 @@ const WatchPage = () => {
             className="w-full h-full"
             src={`https://www.youtube.com/embed/${videoId}`}
             title="YouTube video player"
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           ></iframe>
         </div>
 
-        {/* Video Title */}
-        <h1 className="text-xl font-semibold mt-4">{title}</h1>
+        <div>
+          {/* Video Title */}
+          <h1 className="text-xl font-semibold mt-4">{title}</h1>
 
-        {/* Channel + Like section */}
-        <div className="flex justify-between items-center mt-4 flex-wrap gap-3">
-          {/* Channel info */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
-            <div>
-              <h3 className="font-medium">{channelTitle}</h3>
-              <p className="text-sm text-gray-400">3.9K subscribers</p>
+          {/* Channel + Like section */}
+          <div className="flex justify-between items-center mt-4 flex-wrap gap-3">
+            {/* Channel info */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
+              <div>
+                <h3 className="font-medium">{channelTitle}</h3>
+                <p className="text-sm text-gray-400">3.9K subscribers</p>
+              </div>
+              <button className="bg-white text-black font-semibold px-4 py-1.5 rounded-full ml-4">
+                Subscribe
+              </button>
             </div>
-            <button className="bg-white text-black font-semibold px-4 py-1.5 rounded-full ml-4">
-              Subscribe
-            </button>
+
+            {/* Like / Share */}
+            <div className="flex items-center gap-3">
+              <button className="bg-[#272727] px-4 py-1.5 rounded-full flex items-center gap-2">
+                👍 {likeCount ? Number(likeCount).toLocaleString() : 0}
+              </button>
+              <button className="bg-[#272727] px-4 py-1.5 rounded-full">
+                Share
+              </button>
+            </div>
           </div>
 
-          {/* Like / Share */}
-          <div className="flex items-center gap-3">
-            <button className="bg-[#272727] px-4 py-1.5 rounded-full flex items-center gap-2">
-              👍 {likeCount ? Number(likeCount).toLocaleString() : 0}
-            </button>
-            <button className="bg-[#272727] px-4 py-1.5 rounded-full">Share</button>
+          {/* Description box */}
+          <div className="bg-[#272727] mt-5 p-4 rounded-xl text-gray-200 text-sm whitespace-pre-line">
+            <div>
+              <span className="font-semibold">
+                {Number(viewCount).toLocaleString()} views
+              </span>{" "}
+              • {new Date(publishedAt).toDateString()}
+            </div>
+            <div className="mt-2">
+              {description?.length > 250
+                ? description.slice(0, 250) + "..."
+                : description}
+            </div>
           </div>
-        </div>
 
-        {/* Description box */}
-        <div className="bg-[#272727] mt-5 p-4 rounded-xl text-gray-200 text-sm whitespace-pre-line">
-          <div>
-            <span className="font-semibold">
-              {Number(viewCount).toLocaleString()} views
-            </span>{" "}
-            • {new Date(publishedAt).toDateString()}
-          </div>
-          <div className="mt-2">
-            {description?.length > 250
-              ? description.slice(0, 250) + "..."
-              : description}
+          {/* working on comments */}
+          <div className="p-4 ">
+            <CommentContainer />
           </div>
         </div>
       </div>
