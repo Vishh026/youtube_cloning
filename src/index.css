@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+.menuItems::-webkit-scrollbar{
+    display: none;
+}
+.btnlisting::-webkit-scrollbar{
+    display: none;
+}
