@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Menu, Search, Mic, User } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { toggleMenu } from "./utils/reducers/AppSlice";
 import { YOUTUBE_SUGGESTION_API } from "../Constant";
 import { cacheResults } from "./utils/reducers/SearchSlice";
+import {useNavigate} from "react-router-dom"
+
 
 const Head = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggetion,setShowSuggetion] = useState(true)
-  const dispatch = useDispatch();
-
-  // get the catche redults from store
-  const  searchCache= useSelector((store)=> store.searchReducer) 
-  console.log("catche",searchCache);
   
-
+  const dispatch = useDispatch()
+  const  searchCache= useSelector((store)=> store.searchReducer) // get the catche redults from store
+  
   const toggleMenubar = () => {
     dispatch(toggleMenu());
   };
 
+  const handleSuggestion= (query) => {
+    console.log("query",query);
+    navigate(`/results?search_query=${query}`)
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if(searchCache[searchQuery]){
-        setShowSuggetion(searchCache[searchQuery])
+        setSuggestions(searchCache[searchQuery])
       }else{
           getSuggestionsbySearch();
       }
@@ -33,8 +38,7 @@ const Head = () => {
   }, [searchQuery]);
 
   const getSuggestionsbySearch = async () => {
-    console.log("searchquery",searchQuery);
-    
+    console.log("results",suggestions)
     if (!searchQuery) return;
 
     const data = await fetch(YOUTUBE_SUGGESTION_API + searchQuery);
@@ -43,6 +47,8 @@ const Head = () => {
     dispatch(cacheResults({[searchQuery]: json[1]}))
     setSuggestions(json[1]);
   };
+  console.log("suggetsion",suggestions);
+  
 
   return (
     <div>
@@ -65,7 +71,7 @@ const Head = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setShowSuggetion(true)}
-              onBlur={() => setShowSuggetion(false)}
+              onBlur={() => setTimeout(() =>  setShowSuggetion(false), 200)}
               placeholder="Search"
               className="w-full bg-[#121212] text-white border border-[#303030] rounded-l-full px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500 placeholder-gray-400"
             />
@@ -83,7 +89,8 @@ const Head = () => {
             <ul className="absolute top-full left-0 bg-[#1a1919] w-full mt-2 p-2 rounded-lg shadow-lg border border-[#303030] z-50">
               {suggestions.map((item, index) => (
                 <li
-                  key={index}
+                  key={index} 
+                  onClick={()=> handleSuggestion(item)}
                   className="flex gap-3 items-center text-md py-1 px-2 hover:bg-[#2a2a2a] cursor-pointer"
                 >
                   <Search className="h-4 w-4 text-gray-400" />

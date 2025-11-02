@@ -3,6 +3,7 @@ import Body from "./components/Body";
 import Head from "./components/Head";
 import MainContainer from "./components/MainContainer";
 import WatchPage from "./components/WatchPage";
+import SearchResults from "./components/SearchResults";
 
 const App = () => {
   
@@ -13,6 +14,7 @@ const App = () => {
     <Route path="/" element={<Body />}>
       <Route index element={<MainContainer />} />
       <Route path="/watch" element={<WatchPage />} />
+      <Route path= "/results" element= {<SearchResults />} />
     </Route>
   </Routes>
     </div>

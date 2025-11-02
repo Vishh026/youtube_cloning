@@ -8,7 +8,7 @@ const CommentList = ({comments}) => {
        <div key= {index} >
          <Comment data = {comment} />
             {/* recursi */}
-         <div className='pl-5 border-l-1 border-zinc-500'>
+         <div className='pl-5 border-l border-zinc-500'>
             <CommentList comments= {comment.replies}/>
          </div>
        </div>

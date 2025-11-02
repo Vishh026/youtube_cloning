@@ -2,7 +2,6 @@ import React from "react";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 
 const Comment = ({ data }) => {
-    console.log(data);
     
   const { user, profilePic, time, text, likes } = data;
   return (
