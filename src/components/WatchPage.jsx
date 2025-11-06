@@ -4,7 +4,6 @@ import { closeMenu } from "./utils/reducers/AppSlice";
 import { useSearchParams } from "react-router-dom";
 import { YOUTUBE_SINGLE_VIDEO } from "../Constant";
 import CommentContainer from "./CommentContainer";
-import ChatMessage from "./ChatMessage";
 import LiveChat from "./LiveChat";
 
 const WatchPage = () => {
