@@ -12,3 +12,6 @@ export const YOUTUBE_SUGGESTION_API =
 export const YOUTUBE_SEARCH_API = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=25&key=" +
   YOUTUBE_OWN_API +
   "&q=";
+
+export const Live_Chat = "https://www.googleapis.com/youtube/v3/liveChat/messages"
+

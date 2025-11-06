@@ -10,7 +10,7 @@ const VerticalCart = ({ video }) => {
   return (
     <div className="flex gap-4 p-3 rounded-xl hover:bg-zinc-900 transition-all duration-200 cursor-pointer">
       {/* Thumbnail */}
-      <div className="flex-shrink-0">
+      <div className="flex shrink-0">
         <img
           src={thumbnails?.medium?.url}
           alt={title}

@@ -6,3 +6,18 @@
 .btnlisting::-webkit-scrollbar{
     display: none;
 }
+
+@media (max-width: 1024px) {
+  .livechat {
+    height: 20rem;
+    background-color: red;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}

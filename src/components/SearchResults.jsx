@@ -5,6 +5,7 @@ import VerticalCart from './VerticalCart'
 
 const SearchResults = () => {
   const [videos,setVideos] = useState([])
+  const {id} =videos
   const [searchParams] = useSearchParams()
   const query = searchParams.get("search_query") || ""
 
@@ -22,7 +23,12 @@ const SearchResults = () => {
   return (
    <div>
     {videos.map(video => (
-      <VerticalCart video = {video} key = {video.id}/>
+      console.log("video",id
+
+        
+      )
+      
+      // <VerticalCart video = {video} key = {video.id}/>
     ))}
    </div>
   )

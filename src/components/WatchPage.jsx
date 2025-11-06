@@ -4,6 +4,8 @@ import { closeMenu } from "./utils/reducers/AppSlice";
 import { useSearchParams } from "react-router-dom";
 import { YOUTUBE_SINGLE_VIDEO } from "../Constant";
 import CommentContainer from "./CommentContainer";
+import ChatMessage from "./ChatMessage";
+import LiveChat from "./LiveChat";
 
 const WatchPage = () => {
   const dispatch = useDispatch();
@@ -14,6 +16,7 @@ const WatchPage = () => {
   const getSingleVideoData = async () => {
     const data = await fetch(YOUTUBE_SINGLE_VIDEO(videoId));
     const json = await data.json();
+
     setSingleVideo(json.items[0]);
   };
 
@@ -29,9 +32,9 @@ const WatchPage = () => {
   const { viewCount, likeCount } = statistics;
 
   return (
-    <div className="bg-[#0f0f0f] min-h-screen text-white flex flex-col lg:flex-row gap-6 px-8 py-6">
+    <div className="bg-[#0f0f0f] text-white flex flex-col lg:flex-row gap-6 px-8 py-6">
       {/* LEFT SECTION */}
-      <div className="flex-1">
+      <div className="flex-1 min-w-[60%] max-w-[70%]">
         {/* Video Player */}
         <div className="w-full aspect-video rounded-2xl overflow-hidden">
           <iframe
@@ -96,11 +99,7 @@ const WatchPage = () => {
       </div>
 
       {/* RIGHT SECTION (future recommended videos) */}
-      <div className="w-full lg:w-[30%]">
-        <div className="bg-[#1a1a1a] rounded-xl p-4 text-gray-400">
-          <p className="text-sm">Recommended videos will appear here soon 🚀</p>
-        </div>
-      </div>
+     <LiveChat />
     </div>
   );
 };
