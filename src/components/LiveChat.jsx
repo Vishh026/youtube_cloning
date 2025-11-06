@@ -45,7 +45,7 @@ const LiveChat = () => {
   };
 
   return (
-    <div className="w-full flex flex-col bg-[#1e1e1e] rounded-xl px-4 pt-3 pb-2 shadow-md border border-zinc-800 h-[32rem]">
+    <div className="w-full flex flex-col bg-[#1e1e1e] rounded-xl px-4 pt-3 pb-2 shadow-md border border-zinc-800 h-128">
       <h2 className="text-white font-semibold mb-2 text-[15px] tracking-wide">
         Live Chat
       </h2>

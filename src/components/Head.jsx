@@ -21,7 +21,6 @@ const Head = () => {
   };
 
   const handleSuggestion= (query) => {
-    console.log("query",query);
     navigate(`/results?search_query=${query}`)
   }
 
@@ -38,7 +37,6 @@ const Head = () => {
   }, [searchQuery]);
 
   const getSuggestionsbySearch = async () => {
-    console.log("results",suggestions)
     if (!searchQuery) return;
 
     const data = await fetch(YOUTUBE_SUGGESTION_API + searchQuery);
@@ -47,7 +45,6 @@ const Head = () => {
     dispatch(cacheResults({[searchQuery]: json[1]}))
     setSuggestions(json[1]);
   };
-  console.log("suggetsion",suggestions);
   
 
   return (

@@ -17,18 +17,15 @@ const SearchResults = () => {
   const ShowSearchResults = async() => {
     const data = await fetch(YOUTUBE_SEARCH_API+ query)
     const json = await data.json()
+    
     setVideos(json.items || [])
   }
   
   return (
    <div>
     {videos.map(video => (
-      console.log("video",id
-
-        
-      )
       
-      // <VerticalCart video = {video} key = {video.id}/>
+      <VerticalCart video = {video} key = {video.id}/>
     ))}
    </div>
   )
